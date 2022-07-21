@@ -59,7 +59,7 @@ class EmailNotification
      */
     public function sendNotificationEmail($templateParams = [])
     {
-        $emailsConfig = $this->scopeConfig->getValue(self::XML_PATH_NEW_ENTITY_EMAIL_RECEIVER);
+        $emailsConfig = $this->scopeConfig->getValue(self::XML_PATH_NEW_ENTITY_EMAIL_RECEIVER) ?: '';
         $emails = explode(',', $emailsConfig);
         return $this->sendEmailTemplate($emails,
             self::XML_PATH_NEW_ENTITY_EMAIL_TEMPLATE,
@@ -105,7 +105,7 @@ class EmailNotification
             ->setTemplateVars($templateParams)
             ->setFrom($from)
             ->addTo($email);
-        
+
         foreach ($emails as $email) {
             $this->transportBuilder->addBcc($email);
         }
